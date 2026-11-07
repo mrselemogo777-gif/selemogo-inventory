@@ -5,6 +5,14 @@ st.set_option("client.showSidebarNavigation", False)
 
 init_db()
 
+# Auto-seed on first run (e.g. Streamlit Cloud with empty DB)
+from database import get_connection
+with get_connection() as _conn:
+    _has_products = _conn.execute("SELECT COUNT(*) FROM products").fetchone()[0]
+if _has_products == 0:
+    from seed import seed
+    seed()
+
 import styles
 styles.apply()
 
