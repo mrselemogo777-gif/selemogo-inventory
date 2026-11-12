@@ -1,0 +1,13 @@
+name: Keep Streamlit App Awake
+
+on:
+  schedule:
+    - cron: '0 */12 * * *'
+  workflow_dispatch:
+
+jobs:
+  wake-up:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Selemogo Inventory
+        run: curl -s -o /dev/null https://selemogo-inventory.streamlit.app/
